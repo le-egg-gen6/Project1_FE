@@ -1,5 +1,0 @@
-interface SidebarComponentProps {
-    
-}
-
-const Sidebar = 
