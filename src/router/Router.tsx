@@ -19,12 +19,17 @@ const NotFoundPage = Loadable(
   lazy(() => import("@/pages/NotFound"))
 );
 
+const TestPage = Loadable(
+  lazy(() => import("@/pages/Test"))
+)
+
 const Router = () => {
   return (
     <Routes>
       <Route path="/" element={<Navigate to={"/main"} replace />} />
       <Route path="/main" element={MainPage} />
       <Route path="/not-found" element={NotFoundPage} />
+      <Route path="/test" element={TestPage} />
       <Route path="*" element={<Navigate to={"/not-found"} replace />} />
     </Routes>
   )

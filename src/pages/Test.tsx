@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ForceGraph3DComponent from "./custom_components/ForceGraph3DComponent";
+import ForceGraph3DComponent from "@/custom_components/ForceGraph3DComponent";
 
 // Sample graph data
 const initialGraphData = {
