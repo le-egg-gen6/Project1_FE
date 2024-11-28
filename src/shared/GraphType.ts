@@ -1,8 +1,8 @@
 export enum GraphType {
-    DIRECTED = "DIRECTED",
-    UNDIRECTED = "UNDIRECTED",
+  DIRECTED = "DIRECTED",
+  UNDIRECTED = "UNDIRECTED",
 }
 
 export function fromStringToGraphType(strValue: string) {
-    return strValue as GraphType;
+  return strValue as GraphType;
 }
