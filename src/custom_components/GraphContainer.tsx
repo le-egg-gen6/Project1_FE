@@ -1,7 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Edge } from "@/data_object/Edge";
-import { Graph } from "@/data_object/Graph";
-import { Node } from "@/data_object/Node";
+import { Edge, Node, Graph } from "@/object/APIObject";
 import React from "react";
 import GraphControls from "./GraphControl";
 import GraphVisualization from "./GrapVisualization";

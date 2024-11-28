@@ -1,4 +1,4 @@
-import { Graph } from "@/data_object/Graph";
+import { Graph } from "@/object/APIObject";
 import React from "react";
 
 interface GraphStatsProps {
