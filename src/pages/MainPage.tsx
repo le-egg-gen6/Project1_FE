@@ -1,5 +1,7 @@
 import { SidebarProvider } from "@/components/ui/sidebar";
 import CustomSidebar from "@/custom_components/CustomSidebar";
+import TopBar from "@/custom_components/CustomTopbar";
+import Test from "./Test";
 
 const sampleData = {
   menus: [
@@ -33,13 +35,14 @@ const sampleData = {
 
 const MainPage = () => {
   return (
-    <SidebarProvider className="h-screen">
+    <SidebarProvider className="h-screen w-screen">
       <div className="h-full">
         <CustomSidebar menus={sampleData} />
       </div>
       <main className="relative flex h-screen w-full flex-col overflow-y-auto overflow-x-hidden">
+        <TopBar />
         <div className="flex-1 px-3 py-4">
-          <div className="min-h-full">Test</div>
+          <div className="min-h-full"><Test /></div>
         </div>
       </main>
     </SidebarProvider>
