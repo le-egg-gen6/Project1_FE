@@ -46,7 +46,7 @@ const ForceGraph3DComponent: React.FC<ForceGraph3DComponentProps> = ({
         graphData={graphData}
         nodeLabel={getNodeLabel}
         nodeThreeObject={getNodeObject}
-        linkColor={() => "rgba(0,0,0,0.9)"}
+        linkColor={() => "rgba(0,0,0,1)"}
         linkWidth={1}
         linkOpacity={0.5}
         backgroundColor="white"
