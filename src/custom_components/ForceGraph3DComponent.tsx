@@ -47,9 +47,10 @@ const ForceGraph3DComponent: React.FC<ForceGraph3DComponentProps> = ({
         nodeLabel={getNodeLabel}
         nodeThreeObject={getNodeObject}
         linkColor={() => "rgba(0,0,0,1)"}
-        linkWidth={1}
-        linkOpacity={0.5}
         backgroundColor="white"
+        linkDirectionalArrowLength={5}
+        linkDirectionalArrowRelPos={1}
+        linkCurvature={0.5}
         height={600}
         width={900}
       />

@@ -40,16 +40,16 @@ function Test() {
   const [graphData, setGraphData] = useState(initialGraphData);
 
   const addRandomNode = () => {
-    const newNode = {
-      id: `Node ${graphData.nodes.length + 1}`,
-      label: `Random Node ${graphData.nodes.length + 1}`,
-      radius: Math.random() * 4 + 2,
-      color: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
-    };
+    // const newNode = {
+    //   id: `Node ${graphData.nodes.length + 1}`,
+    //   label: `Random Node ${graphData.nodes.length + 1}`,
+    //   radius: Math.random() * 4 + 2,
+    //   color: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+    // };
 
     const newLink = {
       id: "0",
-      source: newNode.id,
+      source: graphData.nodes[Math.floor(Math.random() * graphData.nodes.length)].id,
       target:
         graphData.nodes[Math.floor(Math.random() * graphData.nodes.length)].id,
     };
@@ -57,14 +57,14 @@ function Test() {
     setGraphData((prevData) => ({
       id: prevData.id,
       type: prevData.type,
-      nodes: [...prevData.nodes, newNode],
+      nodes: [...prevData.nodes],
       links: [...prevData.links, newLink],
     }));
   };
 
   return (
     <div className="relative !max-h-fit">
-      <ForceGraph3DComponent graphData={graphData} />
+      <ForceGraph3DComponent graphData={graphData}/>
       <button
         className="absolute top-4 left-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         onClick={addRandomNode}
