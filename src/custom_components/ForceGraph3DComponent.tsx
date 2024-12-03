@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useMemo } from "react";
 import ForceGraph3D from "react-force-graph-3d";
 import { extend } from "@react-three/fiber";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import * as THREE from "three";
 
 import { _Graph, _Node } from "@/object/DataObject";
@@ -23,6 +24,12 @@ const ForceGraph3DComponent: React.FC<ForceGraph3DComponentProps> = ({
     fg.controls().enableDamping = true;
     fg.controls().dampingFactor = 0.25;
     fg.controls().enableZoom = true;
+    const bloomPass = new UnrealBloomPass();
+    bloomPass.strength = 0.5;
+    bloomPass.radius = 0.5;
+    bloomPass.threshold = 0;
+    fg.postProcessingComposer().addPass(bloomPass);
+
   }, []);
 
   // Custom node object generation
@@ -46,8 +53,7 @@ const ForceGraph3DComponent: React.FC<ForceGraph3DComponentProps> = ({
         graphData={graphData}
         nodeLabel={getNodeLabel}
         nodeThreeObject={getNodeObject}
-        linkColor={() => "rgba(0,0,0,1)"}
-        backgroundColor="white"
+        backgroundColor="#000003"
         linkDirectionalArrowLength={5}
         linkDirectionalArrowRelPos={1}
         linkCurvature={0.5}
