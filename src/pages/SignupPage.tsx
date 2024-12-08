@@ -13,6 +13,7 @@ import { useState } from "react";
 
 export default function SignUpPage() {
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -24,7 +25,7 @@ export default function SignUpPage() {
     e.preventDefault();
     try {
       setIsLoading(true);
-      await signup(email, password, firstName, lastName);
+      await signup(username, email, password, firstName, lastName);
     } finally {
       setIsLoading(false);
     }
@@ -65,6 +66,16 @@ export default function SignUpPage() {
                   onChange={(e) => setLastName(e.target.value)}
                 />
               </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="username">Username</Label>
+              <Input
+                id="username"
+                required
+                value={username}
+                placeholder="ledeptrai"
+                onChange={(e) => setUsername(e.target.value)}
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>

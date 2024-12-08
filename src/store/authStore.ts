@@ -3,22 +3,25 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 export interface UserData {
   id: string;
+  username: string;
   email: string;
   firstName: string;
   lastName: string;
+  validated: boolean;
 }
 
 interface AuthState {
   user: UserData | null;
-  login: (email: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<void>;
   signup: (
+    username: string,
     email: string,
     password: string,
     firstName: string,
     lastName: string
   ) => Promise<void>;
   logout: () => void;
-  validate: (code: string) => Promise<boolean>;
+  validate: (code: string) => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -26,43 +29,23 @@ export const useAuthStore = create<AuthState>()(
     (set) => ({
       user: null,
       isAuthenticated: false,
-      login: async (email: string, password: string) => {
-        // In a real application, you would make an API call here
-        // This is a mock implementation
-        await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API call
-        const mockUser: UserData = {
-          id: "1",
-          email,
-          firstName: "John",
-          lastName: "Doe",
-        };
-        set({ user: mockUser });
+      login: async (username: string, password: string) => {
+        
       },
       signup: async (
+        username: string,
         email: string,
         password: string,
         firstName: string,
         lastName: string
       ) => {
-        // In a real application, you would make an API call here
-        // This is a mock implementation
-        await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API call
-        const mockUser: UserData = { id: "1", email, firstName, lastName };
-        set({ user: mockUser });
+
       },
       logout: () => {
         set({ user: null });
       },
       validate: async (code: string) => {
-        // Simulate API call
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
-        // For demonstration purposes, consider '123456' as the valid code
-        if (code === "123456") {
-          return true;
-        } else {
-          throw new Error("Invalid code");
-        }
+      
       },
     }),
     {

@@ -6,30 +6,21 @@ import Test from "./Test";
 const sampleData = {
   menus: [
     {
-      label: "Algorithms",
+      label: "Directed Graphs",
       items: [
-        { id: "bfs", label: "Breadth-First Search" },
-        { id: "dfs", label: "Depth-First Search" },
-        { id: "dijkstra", label: "Dijkstra's Algorithm" },
-        { id: "astar", label: "A* Search" },
+        { id: "test_1", label: "Graph_1" },
+        { id: "test_2", label: "Graph_2" },
+        { id: "test_3", label: "Graph_3" },
       ],
     },
     {
-      label: "Graph Types",
+      label: "Undirected Graph",
       items: [
-        { id: "directed", label: "Directed Graph" },
-        { id: "undirected", label: "Undirected Graph" },
-        { id: "weighted", label: "Weighted Graph" },
+        { id: "test_4", label: "Graph_4" },
+        { id: "test_5", label: "Graph_5" },
+        { id: "test_6", label: "Graph_6" },
       ],
-    },
-    {
-      label: "Visualizations",
-      items: [
-        { id: "step-by-step", label: "Step-by-Step" },
-        { id: "animation", label: "Animated" },
-        { id: "comparison", label: "Algorithm Comparison" },
-      ],
-    },
+    }
   ],
 };
 

@@ -12,7 +12,7 @@ import { Eye, EyeOff, GitGraphIcon as Graph, Loader2 } from "lucide-react";
 import { useState } from "react";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -22,7 +22,7 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      await login(email, password);
+      await login(username, password);
     } finally {
       setIsLoading(false);
     }
@@ -43,14 +43,13 @@ const LoginPage = () => {
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="username">Username</Label>
               <Input
-                id="email"
-                type="email"
+                id="username"
                 required
-                value={email}
+                value={username}
                 placeholder="ledeptrai@gmail.com"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
             <div className="space-y-2 relative">

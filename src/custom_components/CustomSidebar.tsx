@@ -1,28 +1,28 @@
 import {
-    ChevronDown,
-    ChevronRight,
-    GitGraphIcon as Graph,
-    Mail,
+  ChevronDown,
+  ChevronRight,
+  GitGraphIcon as Graph,
+  Mail,
 } from "lucide-react";
 
 import {
-    Collapsible,
-    CollapsibleContent,
-    CollapsibleTrigger,
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { Separator } from "@/components/ui/separator";
 import {
-    Sidebar,
-    SidebarContent,
-    SidebarFooter,
-    SidebarGroup,
-    SidebarGroupContent,
-    SidebarGroupLabel,
-    SidebarHeader,
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem,
-    SidebarProvider,
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
 } from "@/components/ui/sidebar";
 
 interface SidebarMenuItemProps {
@@ -60,7 +60,7 @@ const CustomSidebar = ({ menus }: SidebarProps) => {
         <SidebarContent>
           {menus.menus.map((menu, index) => (
             <SidebarGroup key={index}>
-              <Collapsible>
+              <Collapsible defaultOpen={true}>
                 <CollapsibleTrigger asChild>
                   <SidebarGroupLabel className="flex items-center justify-between py-2 px-4 text-sm font-medium text-gray-700 hover:bg-gray-100 cursor-pointer">
                     {menu.label}
@@ -73,13 +73,13 @@ const CustomSidebar = ({ menus }: SidebarProps) => {
                       {menu.items.map((item) => (
                         <SidebarMenuItem key={item.id}>
                           <SidebarMenuButton asChild>
-                            <a
-                              href={`#${item.id}`}
+                            <p
+                              key={item.id}
                               className="flex items-center py-2 px-4 text-sm text-gray-600 hover:bg-gray-100"
                             >
                               <ChevronRight className="h-4 w-4 mr-2" />
                               {item.label}
-                            </a>
+                            </p>
                           </SidebarMenuButton>
                         </SidebarMenuItem>
                       ))}
