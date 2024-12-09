@@ -1,3 +1,4 @@
+import service from "@/service/service";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
@@ -20,7 +21,7 @@ interface AuthState {
     firstName: string,
     lastName: string
   ) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
   validate: (code: string) => Promise<void>;
 }
 
@@ -30,7 +31,10 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       isAuthenticated: false,
       login: async (username: string, password: string) => {
-        
+        const response = await service.post("/auth/login", {
+          username: username,
+          password: password,
+        });
       },
       signup: async (
         username: string,
@@ -39,13 +43,21 @@ export const useAuthStore = create<AuthState>()(
         firstName: string,
         lastName: string
       ) => {
-
+        const response = await service.post("/auth/sign-up", {
+          username: username,
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password,
+        });
       },
-      logout: () => {
+      logout: async () => {
+        await service.get("/auth/logout");
         set({ user: null });
       },
       validate: async (code: string) => {
-      
+        const apiUrl = "/verify/check?token=" + code;
+        const response = await service.get(apiUrl);
       },
     }),
     {

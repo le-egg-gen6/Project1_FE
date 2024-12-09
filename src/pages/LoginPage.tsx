@@ -69,7 +69,7 @@ const LoginPage = () => {
                 className="absolute right-0 top-6 bg-inherit hover:text-primary"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? (
+                {!showPassword ? (
                   <EyeOff className="h-4 w-4" />
                 ) : (
                   <Eye className="h-4 w-4" />

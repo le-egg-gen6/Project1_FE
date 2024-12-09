@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const axiosInstance = axios.create({
+const service = axios.create({
   baseURL: String(process.env.VITE_BACKEND_URL) || "http://localhost:8080",
   timeout: 10000,
   headers: {
@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
 });
 
 //Request interceptor
-axiosInstance.interceptors.request.use(
+service.interceptors.request.use(
   (config) => {
     return config;
   },
@@ -19,15 +19,14 @@ axiosInstance.interceptors.request.use(
 );
 
 //Response interceptor
-axiosInstance.interceptors.response.use(
+service.interceptors.response.use(
   (response) => {
     return response.data;
   },
   (error) => {
-    if (error.response) {
-    } else if (error.request) {
-    } else {
-    }
+    console.log(error);
     return Promise.reject(error);
   }
 );
+
+export default service;
