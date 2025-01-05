@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const service = axios.create({
-  baseURL: String(process.env.VITE_BACKEND_URL) || "http://localhost:8080",
+  baseURL: String(import.meta.env.VITE_BACKEND_URL) || "http://localhost:8080",
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",

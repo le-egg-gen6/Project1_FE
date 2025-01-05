@@ -1,7 +1,7 @@
 import {
   ChevronDown,
   ChevronRight,
-  GitGraphIcon as Graph,
+  GitGraphIcon as GraphIcon,
   Mail,
 } from "lucide-react";
 
@@ -24,30 +24,44 @@ import {
   SidebarMenuItem,
   SidebarProvider,
 } from "@/components/ui/sidebar";
+import { useGraphStore } from "@/store/graphStore";
+import { Graph } from "@/object/DataObject";
 
-interface SidebarMenuItemProps {
-  id: string;
-  label: string;
-}
+const CustomSidebar = () => {
+  const { graphData, selectedGraph, setSelectedGraph } =
+    useGraphStore();
 
-interface SidebarMenuProps {
-  label: string;
-  items: SidebarMenuItemProps[];
-}
-
-interface SidebarProps {
-  menus: {
-    menus: SidebarMenuProps[];
+  const getDirectedGraph = () => {
+    return graphData.graphs.filter((graph) => graph.type === "directed");
   };
-}
 
-const CustomSidebar = ({ menus }: SidebarProps) => {
+  const getUndirectedGraph = () => {
+    return graphData.graphs.filter((graph) => graph.type === "undirected");
+  };
+
+  const handleGraphSelection = (graph: Graph) => {
+    setSelectedGraph(graph);
+  };
+
+  const menus = {
+    menus: [
+      {
+        label: "Directed Graphs",
+        items: getDirectedGraph(),
+      },
+      {
+        label: "Undirected Graph",
+        items: getUndirectedGraph(),
+      },
+    ],
+  };
+
   return (
     <SidebarProvider>
       <Sidebar className="border-r border-gray-200 bg-white">
         <SidebarHeader className="p-4">
           <div className="flex items-center space-x-2">
-            <Graph className="h-6 w-6 text-blue-600" />
+            <GraphIcon className="h-6 w-6 text-blue-600" />
             <h2 className="text-lg font-bold text-gray-800">
               Graph Algorithm Simulator
             </h2>
@@ -72,7 +86,11 @@ const CustomSidebar = ({ menus }: SidebarProps) => {
                     <SidebarMenu>
                       {menu.items.map((item) => (
                         <SidebarMenuItem key={item.id}>
-                          <SidebarMenuButton asChild>
+                          <SidebarMenuButton
+                            asChild
+                            onClick={() => handleGraphSelection(item)}
+                            isActive={selectedGraph?.id === item.id}
+                          >
                             <p
                               key={item.id}
                               className="flex items-center py-2 px-4 text-sm text-gray-600 hover:bg-gray-100"

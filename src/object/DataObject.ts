@@ -1,23 +1,23 @@
 import { LucideIcon } from "lucide-react";
 
-export interface _Node {
+export interface Node {
     id: string;
     label: string;
-    radius: number;
-    color: string;
 }
 
-export interface _Link {
+export interface Edge {
     id: string;
+    label: string;
     source: string;
     target: string;
 }
 
-export interface _Graph {
+export interface Graph {
     id: string;
+    label: string;
     type: string;
-    nodes: _Node[];
-    links: _Link[];
+    nodes: Node[];
+    edges: Edge[];
 }
 
 export interface SidebarMeneuItem {
