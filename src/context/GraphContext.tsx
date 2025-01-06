@@ -20,8 +20,9 @@ export const GraphProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const fetchGraphs = async () => {
     try {
-      const response = await service.get("/get-all");
-      setGraphData(response.data);
+      const response = await service.get("/graph/get-all");
+      const listGraph: Graph[] = await response.data;
+      setGraphData(listGraph);
     } catch (error) {
       console.error("Error fetching graphs:", error);
     }

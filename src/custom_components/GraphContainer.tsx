@@ -64,7 +64,7 @@ const GraphContainer: React.FC<GraphContainerProps> = ({ graph }) => {
   };
 
   return (
-    <Card className="w-full h-[800px] overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 shadow-md">
+    <Card className="w-full h-[90vh] overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 shadow-md">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-white border-b border-gray-200">
         <CardTitle className="text-2xl font-bold text-gray-800">
           {graph.label}

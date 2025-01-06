@@ -51,12 +51,7 @@ export default function NodePopup({
     };
 
     try {
-      const response = await service.post("/add-edge", {
-        graphId: graph.id,
-        sourceId: node.id,
-        targetId: targetNode.id,
-        weight: parseInt(weight),
-      });
+      const response = await service.get(`/graph/add-edge?graphId=${graph.id}&sourceId=${node.id}&targetId=${targetNode.id}&weight=${weight}`);
 
       const newEdge = await response.data;
       onCreateEdge(newEdge);

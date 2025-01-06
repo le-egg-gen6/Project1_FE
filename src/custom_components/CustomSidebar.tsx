@@ -31,11 +31,11 @@ const CustomSidebar = () => {
   const { graphData, selectedGraph, setSelectedGraph } = useGraph();
 
   const getDirectedGraph = () => {
-    return graphData ? graphData.filter((graph: Graph) => graph.type === "directed") : [];
+    return graphData ? graphData.filter((graph: Graph) => graph.type === "DIRECTED") : [];
   };
 
   const getUndirectedGraph = () => {
-    return graphData ? graphData.filter((graph: Graph) => graph.type === "undirected") : [];
+    return graphData ? graphData.filter((graph: Graph) => graph.type === "UNDIRECTED") : [];
   };
 
   const handleGraphSelection = (graph: Graph) => {

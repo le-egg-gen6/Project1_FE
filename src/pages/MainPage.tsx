@@ -1,9 +1,11 @@
+import { Card } from "@/components/ui/card";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { useGraph } from "@/context/GraphContext";
 import CustomSidebar from "@/custom_components/CustomSidebar";
 import TopBar from "@/custom_components/CustomTopbar";
 import GraphContainer from "@/custom_components/GraphContainer";
 import { Graph } from "@/object/DataObject";
+import { useEffect } from "react";
 
 const sampleGraph: Graph = {
   id: "graph-1",
@@ -84,6 +86,8 @@ const sampleGraph: Graph = {
 
 const MainPage = () => {
   const { selectedGraph } = useGraph();
+  useEffect(() => {
+  }, [selectedGraph]);
   return (
     <SidebarProvider className="h-screen w-screen">
       <div className="h-full">
@@ -93,7 +97,9 @@ const MainPage = () => {
         <TopBar />
         <div className="flex-1 px-3 py-4">
           <div className="min-h-full">
-            <GraphContainer graph={selectedGraph || sampleGraph} />
+            {selectedGraph ? 
+              <GraphContainer graph={selectedGraph} /> : <Card/>
+            }
           </div>
         </div>
       </main>

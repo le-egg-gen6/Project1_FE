@@ -31,28 +31,13 @@ export default function EdgePopup({ edge, graph, onClose }: EdgePopupProps) {
   const [edgeDetails, setEdgeDetails] = useState<EdgeDetails | null>(null);
 
   useEffect(() => {
-    const fetchEdgeDetails = async () => {
-      //   try {
-      //     const response = await fetch(`/api/edgeDetails/${edge.id}`);
-      //     if (!response.ok) {
-      //       throw new Error("Failed to fetch edge details");
-      //     }
-      //     const data = await response.json();
-      //     setEdgeDetails(data);
-      //   } catch (error) {
-      //     console.error("Error fetching edge details:", error);
-      //     // Handle error (e.g., show error message to user)
-      //   }
-      setEdgeDetails({
-        id: "id",
-        label: "label",
-        weight: 1,
-        source: "source",
-        target: "target",
-      });
-    };
-
-    fetchEdgeDetails();
+    const edgeDetails: EdgeDetails = {
+      ...edge,
+      relatedNodes: graph.nodes.filter((node) => node.id === edge.source || node.id === edge.target),
+      sourceNode: graph.nodes.find((node) => node.id === edge.source),
+      targetNode: graph.nodes.find((node) => node.id === edge.target),
+    }
+    setEdgeDetails(edgeDetails);
   }, [edge.id]);
 
   const getLabel = () => {
@@ -110,7 +95,7 @@ export default function EdgePopup({ edge, graph, onClose }: EdgePopupProps) {
                 <ul className="list-disc pl-5">
                   {edgeDetails.relatedNodes?.map((node) => (
                     <li key={node.id}>
-                      {node.label} (ID: {node.id})
+                      {node.label}
                     </li>
                   ))}
                 </ul>

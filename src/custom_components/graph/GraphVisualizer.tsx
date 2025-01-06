@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Edge, Graph, Node } from "@/object/DataObject";
 import { PlusCircle } from "lucide-react";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { GraphCanvas, GraphCanvasRef } from "reagraph";
 import EdgePopup from "./EdgePopup";
 import { lightTheme } from "./GraphTheme";
@@ -65,16 +65,17 @@ export default function GraphVisualizer({
       highlightedIds = highlightedEdges.map((edge) => edge.id);
     }
     if (highlightedNodes) {
-      highlightedIds = [...highlightedIds, ...highlightedNodes.map((node) => node.id)];
+      highlightedIds = [
+        ...highlightedIds,
+        ...highlightedNodes.map((node) => node.id),
+      ];
     }
     return highlightedIds;
-  }
+  };
 
   const handleCreateNode = useCallback(async () => {
     try {
-      const response = await service.post("/add-node", {
-        graphId: graph.id,
-      });
+      const response = await service.get(`/graph/add-node?graphId=${graph.id}`);
 
       const newNode = await response.data;
       setGraphData((prevGraph) => ({
@@ -87,6 +88,10 @@ export default function GraphVisualizer({
     }
   }, []);
 
+  useEffect(() => {
+    setGraphData(graph);
+  }, [graph]);
+
   return (
     <div className="w-full h-screen relative bg-gradient-to-br from-gray-900 to-gray-800">
       <GraphCanvas
@@ -94,7 +99,7 @@ export default function GraphVisualizer({
         ref={graphRef}
         nodes={graphData.nodes}
         edges={graphData.edges}
-        edgeArrowPosition={graphData.type === "directed" ? "end" : "none"}
+        edgeArrowPosition={graphData.type === "DIRECTED" ? "end" : "none"}
         layoutType="forceDirected2d"
         labelType="all"
         draggable

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "sonner";
 
 const service = axios.create({
   baseURL: String(import.meta.env.VITE_BACKEND_URL) || "http://localhost:8080",
@@ -21,10 +22,11 @@ service.interceptors.request.use(
 //Response interceptor
 service.interceptors.response.use(
   (response) => {
-    return response.data;
+    console.log(response);
+    return response;
   },
   (error) => {
-    console.log(error);
+    toast.error("An error occurred");
     return Promise.reject(error);
   }
 );

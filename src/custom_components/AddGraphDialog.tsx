@@ -27,6 +27,7 @@ import { toast } from "sonner";
 import * as z from "zod";
 
 const formSchema = z.object({
+  name: z.string().min(1).max(100),
   isDirected: z.boolean().default(true),
   isManualInput: z.boolean().default(true),
   manualInput: z.string().optional(),
@@ -44,6 +45,7 @@ export function AddGraphDialog({ open, onOpenChange }: AddGraphDialogProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: "",
       isDirected: true,
       isManualInput: true,
       manualInput: "",
@@ -59,14 +61,14 @@ export function AddGraphDialog({ open, onOpenChange }: AddGraphDialogProps) {
       if (values.isManualInput) {
         const edges = JSON.parse(values.manualInput || "[]");
         const response = await service.get(
-          `/add-edges?edges=${JSON.stringify(edges)}&type=${
-            values.isDirected ? "directed" : "undirected"
-          }`
+          `/graph/generate?name=${values.name}&jsonGraphArray=${JSON.stringify(
+            edges
+          )}&type=${values.isDirected ? "directed" : "undirected"}`
         );
         newGraph = await response.data;
       } else {
-        const response = await service.post(
-          `/generate-random?type=${
+        const response = await service.get(
+          `/graph/generate-random?name=${values.name}&type=${
             values.isDirected ? "directed" : "undirected"
           }`
         );
@@ -93,6 +95,28 @@ export function AddGraphDialog({ open, onOpenChange }: AddGraphDialogProps) {
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-gray-700 font-medium">
+                    Graph Name
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Graph Name"
+                      {...field}
+                      className="border-gray-300"
+                    />
+                  </FormControl>
+                  <FormDescription className="text-gray-500 text-sm mt-1">
+                    Enter graph name. For example: Graph #1
+                  </FormDescription>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="isDirected"
@@ -147,7 +171,7 @@ export function AddGraphDialog({ open, onOpenChange }: AddGraphDialogProps) {
                       <Input
                         placeholder="[[0,1],[1,2]]"
                         {...field}
-                        className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                        className="border-gray-300"
                       />
                     </FormControl>
                     <FormDescription className="text-gray-500 text-sm mt-1">
