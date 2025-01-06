@@ -1,29 +1,31 @@
 import { Button } from "@/components/ui/button";
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { Edge, Graph, Node } from "@/object/DataObject";
+import service from "@/service/service";
+import { toast } from "sonner";
 import { useState } from "react";
 
 interface NodePopupProps {
@@ -39,31 +41,26 @@ export default function NodePopup({
   onClose,
   onCreateEdge,
 }: NodePopupProps) {
-  const [targetNode, setTargetNode] = useState<string>("");
+  const [targetNode, setTargetNode] = useState<Node | null>(null);
   const [weight, setWeight] = useState<string>("");
 
   const handleCreateEdge = async () => {
-    if (!targetNode) return;
+    if (!targetNode) {
+      toast.error("Please select a target node");
+      return;
+    };
 
     try {
-      const response = await fetch("/api/createEdge", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          source: node.id,
-          target: targetNode,
-          weight: weight,
-        }),
+      const response = await service.post("/add-edge", {
+        graphId: graph.id,
+        sourceId: node.id,
+        targetId: targetNode.id,
+        weight: parseInt(weight),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to create edge");
-      }
-
-      const newEdge = await response.json();
+      const newEdge = await response.data;
       onCreateEdge(newEdge);
+      setTimeout(() => toast.success("Node created successfully"), 1000);
       onClose();
     } catch (error) {
       console.error("Error creating edge:", error);
@@ -87,7 +84,10 @@ export default function NodePopup({
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="targetNode">Target Node</Label>
-              <Select onValueChange={setTargetNode}>
+              <Select onValueChange={(targetId) => {
+                const targetNode = graph.nodes.find((n) => n.id === targetId);
+                setTargetNode(targetNode || null);
+              }}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select target node" />
                 </SelectTrigger>

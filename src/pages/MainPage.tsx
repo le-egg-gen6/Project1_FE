@@ -1,4 +1,5 @@
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { useGraph } from "@/context/GraphContext";
 import CustomSidebar from "@/custom_components/CustomSidebar";
 import TopBar from "@/custom_components/CustomTopbar";
 import GraphContainer from "@/custom_components/GraphContainer";
@@ -82,6 +83,7 @@ const sampleGraph: Graph = {
 };
 
 const MainPage = () => {
+  const { selectedGraph } = useGraph();
   return (
     <SidebarProvider className="h-screen w-screen">
       <div className="h-full">
@@ -91,7 +93,7 @@ const MainPage = () => {
         <TopBar />
         <div className="flex-1 px-3 py-4">
           <div className="min-h-full">
-            <GraphContainer graph={sampleGraph} />
+            <GraphContainer graph={selectedGraph || sampleGraph} />
           </div>
         </div>
       </main>

@@ -24,19 +24,18 @@ import {
   SidebarMenuItem,
   SidebarProvider,
 } from "@/components/ui/sidebar";
-import { useGraphStore } from "@/store/graphStore";
+import { useGraph } from "@/context/GraphContext";
 import { Graph } from "@/object/DataObject";
 
 const CustomSidebar = () => {
-  const { graphData, selectedGraph, setSelectedGraph } =
-    useGraphStore();
+  const { graphData, selectedGraph, setSelectedGraph } = useGraph();
 
   const getDirectedGraph = () => {
-    return graphData.graphs.filter((graph) => graph.type === "directed");
+    return graphData ? graphData.filter((graph: Graph) => graph.type === "directed") : [];
   };
 
   const getUndirectedGraph = () => {
-    return graphData.graphs.filter((graph) => graph.type === "undirected");
+    return graphData ? graphData.filter((graph: Graph) => graph.type === "undirected") : [];
   };
 
   const handleGraphSelection = (graph: Graph) => {

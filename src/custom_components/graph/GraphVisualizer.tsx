@@ -6,6 +6,8 @@ import { GraphCanvas, GraphCanvasRef } from "reagraph";
 import EdgePopup from "./EdgePopup";
 import { lightTheme } from "./GraphTheme";
 import NodePopup from "./NodePopup";
+import service from "@/service/service";
+import { toast } from "sonner";
 
 interface GraphVisualizerProps {
   graph: Graph;
@@ -70,23 +72,16 @@ export default function GraphVisualizer({
 
   const handleCreateNode = useCallback(async () => {
     try {
-      const response = await fetch("/api/createNode", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({}),
+      const response = await service.post("/add-node", {
+        graphId: graph.id,
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to create node");
-      }
-
-      const newNode = await response.json();
+      const newNode = await response.data;
       setGraphData((prevGraph) => ({
         ...prevGraph,
         nodes: [...prevGraph.nodes, newNode],
       }));
+      toast.success("Node created successfully");
     } catch (error) {
       console.error("Error creating node:", error);
     }

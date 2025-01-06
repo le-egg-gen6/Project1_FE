@@ -21,6 +21,15 @@ export interface Graph {
     edges: Edge[];
 }
 
+export interface AlgorithmResult {
+    id: string;
+    timeLimitExceeded: boolean;
+    hasPath: boolean;
+    totalWeight: number;
+    nodes: Node[];
+    edges: Edge[];
+}
+
 export interface SidebarMeneuItem {
     id: string;
     label: string;
