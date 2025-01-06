@@ -8,6 +8,7 @@ export interface Node {
 export interface Edge {
     id: string;
     label: string;
+    weight: number;
     source: string;
     target: string;
 }

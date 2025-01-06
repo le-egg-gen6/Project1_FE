@@ -22,7 +22,6 @@ interface EdgePopupProps {
 }
 
 interface EdgeDetails extends Edge {
-  weight: string;
   relatedNodes?: Node[];
   sourceNode?: Node;
   targetNode?: Node;
@@ -45,9 +44,9 @@ export default function EdgePopup({ edge, graph, onClose }: EdgePopupProps) {
       //     // Handle error (e.g., show error message to user)
       //   }
       setEdgeDetails({
-        weight: "weight",
         id: "id",
         label: "label",
+        weight: 1,
         source: "source",
         target: "target",
       });

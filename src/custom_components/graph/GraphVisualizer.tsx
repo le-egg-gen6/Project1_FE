@@ -11,16 +11,18 @@ interface GraphVisualizerProps {
   graph: Graph;
   onNodeClick?: (node: Node) => void;
   onEdgeClick?: (edge: Edge) => void;
+  highlightedNodes?: Node[];
+  highlightedEdges?: Edge[];
 }
 
 export default function GraphVisualizer({
   graph,
   onNodeClick,
   onEdgeClick,
+  highlightedNodes,
+  highlightedEdges,
 }: GraphVisualizerProps) {
   const graphRef = useRef<GraphCanvasRef>(null);
-  const [highlightedNodes, setHighlightedNodes] = useState<Node[]>([]);
-  const [highlightedEdges, setHighlightedEdges] = useState<Edge[]>([]);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
   const [selectedEdge, setSelectedEdge] = useState<Edge | null>(null);
   const [graphData, setGraphData] = useState<Graph>(graph);
@@ -54,6 +56,17 @@ export default function GraphVisualizer({
       edges: [...prevGraph.edges, newEdge],
     }));
   }, []);
+
+  const selectionIds = () => {
+    let highlightedIds: string[] = [];
+    if (highlightedEdges) {
+      highlightedIds = highlightedEdges.map((edge) => edge.id);
+    }
+    if (highlightedNodes) {
+      highlightedIds = [...highlightedIds, ...highlightedNodes.map((node) => node.id)];
+    }
+    return highlightedIds;
+  }
 
   const handleCreateNode = useCallback(async () => {
     try {
@@ -94,16 +107,7 @@ export default function GraphVisualizer({
         enablePanning
         onNodeClick={handleNodeClick}
         onEdgeClick={handleEdgeClick}
-        nodeColor={(node: Node) =>
-          highlightedNodes.includes(node)
-            ? "hsl(var(--primary))"
-            : "hsl(var(--secondary))"
-        }
-        edgeColor={(edge: Edge) =>
-          highlightedEdges.includes(edge)
-            ? "hsl(var(--primary))"
-            : "hsl(var(--muted-foreground))"
-        }
+        selections={selectionIds()}
         edgeLabel={(edge: Edge) => edge.label}
         className="w-full h-full"
       />
